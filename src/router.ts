@@ -1,40 +1,44 @@
+import { RenderHomePage } from "./home.js";
 import { RenderContactPage } from "./contact.js";
 import { RenderGalleryPage } from "./gallery.js";
+import { renderNavbar } from "./navbar.js";
+import { pageUrls, Page } from "./pages.js";
+import { RenderPortfolioPage } from "./portfolio.js";
 
-const pageUrls = {
-  about: "/index.html?about",
-  contact: "/index.html?contact",
-  gallery: "/index.html?gallery",
+const routes: Record<Page, () => void> = {
+  contact: RenderContactPage,
+  gallery: RenderGalleryPage,
+  home: RenderHomePage,
+  portfolio: RenderPortfolioPage,
 };
 
-document.querySelector("#contact-link")?.addEventListener("click", (e) => {
-  let stateObj = { page: "contact" };
-  document.title = "Contact";
-  history.pushState(stateObj, "contact", "?contact");
-  RenderContactPage();
-});
-
-document.querySelector("#gallery-link")?.addEventListener("click", (e) => {
-  let stateObj = { page: "gallery" };
-  document.title = "Gallery";
-  history.pushState(stateObj, "gallery", "?gallery");
-  RenderGalleryPage();
-});
+export function navigateTo(page: Page): void {
+  history.pushState({ page }, page, pageUrls[page]);
+  document.title = page.charAt(0).toUpperCase() + page.slice(1);
+  routes[page]();
+}
+export function handleRouting(): void {
+  const current = parsePageFromUrl();
+  routes[current]();
+}
+function parsePageFromUrl(): Page {
+  const query = window.location.search.replace("?", "");
+  if (isValidPage(query)) return query as Page;
+  else {
+    console.error(`Invalid page: ${query}`);
+    return "home";
+  }
+  return "home";
+}
+function isValidPage(p: string): p is Page {
+  return ["contact", "gallery", "portfolio", "home"].includes(p);
+}
 
 function OnStartUp(): void {
-  popStateHandler();
+  renderNavbar();
+  window.addEventListener("DOMContentLoaded", () => {
+    handleRouting();
+  });
+  window.addEventListener("popstate", handleRouting);
 }
 OnStartUp();
-function popStateHandler(): void {
-  const loc: string = window.location.href
-    .toString()
-    .split(window.location.host)[1];
-  if (loc === pageUrls.contact) {
-    RenderContactPage();
-  }
-  if (loc === pageUrls.about) {
-  }
-  if (loc == pageUrls.gallery) {
-    RenderGalleryPage();
-  }
-}
