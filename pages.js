@@ -1,9 +1,9 @@
-const baseUrl = "/index.html";
+const BASE_PATH = window.location.pathname.replace(/\/[^/]*$/, "");
 export const pageUrls = {
-    home: `/?home`,
-    contact: `/?contact`,
-    gallery: `/?gallery`,
-    portfolio: `/?portfolio`,
+    home: `${BASE_PATH}?home`,
+    contact: `${BASE_PATH}?contact`,
+    gallery: `${BASE_PATH}?gallery`,
+    portfolio: `${BASE_PATH}?portfolio`,
 };
 export const pages = [
     { page: "home", label: "Home" },
