@@ -13,8 +13,7 @@ const routes: Record<Page, () => void> = {
 };
 
 export function navigateTo(page: Page): void {
-  const fullUrl = pageUrls[page];
-  history.pushState({ page }, page, fullUrl);
+  history.pushState({ page }, page, pageUrls[page]);
   document.title = page.charAt(0).toUpperCase() + page.slice(1);
   routes[page]();
 }
