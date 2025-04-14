@@ -1,11 +1,10 @@
+const baseUrl = "/index.html";
 export type Page = "home" | "contact" | "gallery" | "portfolio";
-const BASE_PATH = window.location.pathname.replace(/\/[^/]*$/, "");
-
 export const pageUrls: Record<Page, string> = {
-  home: `${BASE_PATH}?home`,
-  contact: `${BASE_PATH}?contact`,
-  gallery: `${BASE_PATH}?gallery`,
-  portfolio: `${BASE_PATH}?portfolio`,
+  home: "/",
+  contact: "/contact",
+  gallery: "/gallery",
+  portfolio: "/portfolio",
 };
 
 export const pages: { page: Page; label: string }[] = [
