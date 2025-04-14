@@ -1,11 +1,12 @@
 const baseUrl = "/index.html";
 export type Page = "home" | "contact" | "gallery" | "portfolio";
 export const pageUrls: Record<Page, string> = {
-  home: `/?home`,
-  contact: `/?contact`,
-  gallery: `/?gallery`,
-  portfolio: `/?portfolio`,
+  home: "/",
+  contact: "/contact",
+  gallery: "/gallery",
+  portfolio: "/portfolio",
 };
+
 export const pages: { page: Page; label: string }[] = [
   { page: "home", label: "Home" },
   { page: "portfolio", label: "Portfolio" },
