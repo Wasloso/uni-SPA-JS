@@ -17,17 +17,14 @@ export function navigateTo(page: Page): void {
   document.title = page.charAt(0).toUpperCase() + page.slice(1);
   routes[page]();
 }
-export function handleRouting(): void {
+
+function handleRouting(): void {
   const current = parsePageFromUrl();
   routes[current]();
 }
 function parsePageFromUrl(): Page {
   const query = window.location.search.replace("?", "");
   if (isValidPage(query)) return query as Page;
-  else {
-    console.error(`Invalid page: ${query}`);
-    return "home";
-  }
   return "home";
 }
 function isValidPage(p: string): p is Page {

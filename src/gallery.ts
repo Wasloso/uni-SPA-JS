@@ -38,12 +38,8 @@ function GalleryItemComponent(
   img.dataset.src = imageUrl;
   img.alt = altText;
   img.loading = "lazy";
-
-  // Reserve space to prevent layout collapse
   img.width = size;
   img.height = size;
-
-  // Initial animation state
   img.style.opacity = "0";
   img.style.transform = "translateY(30px)";
   img.style.transition = "opacity 0.5s ease-out, transform 0.5s ease-out";
@@ -72,12 +68,10 @@ function GalleryComponent(count: number = 9): HTMLElement {
       for (const entry of entries) {
         if (entry.isIntersecting) {
           const img = entry.target as HTMLImageElement;
-
           img.onload = () => {
             img.style.opacity = "1";
             img.style.transform = "translateY(0)";
           };
-
           try {
             const response = await fetch(img.dataset.src || "");
             const blob = await response.blob();
@@ -85,7 +79,6 @@ function GalleryComponent(count: number = 9): HTMLElement {
           } catch (err) {
             console.error("Failed to load image:", err);
           }
-
           obs.unobserve(img);
         }
       }

@@ -1,16 +1,15 @@
 interface GitHubRepo {
   name: string;
   description: string;
-  html_url: string; // URL of the repository
+  html_url: string;
   language: string;
-  stargazers_count: number; // Number of stars the repository has
+  stargazers_count: number;
 }
 
 async function fetchGitHubRepos(username: string): Promise<GitHubRepo[]> {
   const response = await fetch(
     `https://api.github.com/users/${username}/repos`
   );
-
   if (!response.ok) {
     throw new Error("Failed to fetch repositories.");
   }
@@ -44,7 +43,6 @@ function PortfolioComponent(repos: GitHubRepo[]): HTMLElement {
     link.appendChild(title);
     link.appendChild(description);
     link.appendChild(stars);
-
     container.appendChild(link);
   });
 
